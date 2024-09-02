@@ -41,4 +41,42 @@ router.post('/register', async (req, res) => {
 
 });
 
+router.post('/login', async (req, res)=>{
+    try {
+
+        // check if user exists or not
+        const user = await User.findOne({email: req.body.email});
+        if (!user){
+            return res.send({
+                success: false,
+                message: "User does not exists!",
+            });
+        }
+
+        // compare the password
+
+        const validPassword = await bcrypt.compare(
+            req.body.password,
+            user.password
+        );
+        if(!validPassword){
+            return res.send({
+                success: false,
+                message: "Inavlid Password!",
+            });
+        }
+
+        res.send({
+            success: true,
+            message: "Logged in successfully!"
+        });
+        
+    } catch (error) {
+        res.send({
+            success: false,
+            message: error.message,
+        });
+    }
+});
+
 module.exports = router; 
