@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-mongoose.connect(process.env.mongo_url)
+{mongoose.connect(process.env.mongo_url)
 
 const connection = mongoose.connection;
 
@@ -11,4 +11,4 @@ connection.on('connected', ()=> {
 connection.on('error', (err)=> {
     console.log("MongoDB Connection Failed");
 })
-
+}
